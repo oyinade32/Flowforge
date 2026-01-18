@@ -1,3 +1,4 @@
+mod agent;
 use clap::{Parser, Subcommand};
 use std::fs;
 use std::path::Path;
@@ -23,6 +24,11 @@ enum Commands {
         #[arg(long, default_value = "basic")]
         lang: String,
     },
+/// Run the AI agent
+  Ai {
+   /// Ai action (e.g. help)
+   action:  Vec <String>,
+}
 }
 
 fn main() {
@@ -33,6 +39,9 @@ fn main() {
             create_project(&name, &lang);
             init_git(&name);
         }
+    Commands::Ai { action } => {
+       agent::ai::handle_ai(action);
+}
       }  
     
    }

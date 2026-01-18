@@ -1,0 +1,30 @@
+name: Build Flowforge CLI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install Rust
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Add aarch64 target
+        run: rustup target add aarch64-unknown-linux-gnu
+
+      - name: Build aarch64 binary
+        run: cargo build --release --target aarch64-unknown-linux-gnu
+
+      - name: Upload aarch64 binary
+        uses: actions/upload-artifact@v4
+        with:
+          name: flowforge-aarch64
+          path: target/aarch64-unknown-linux-gnu/release/flowforge
