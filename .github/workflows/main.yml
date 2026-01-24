@@ -17,14 +17,12 @@ jobs:
       - name: Install Rust
         uses: dtolnay/rust-toolchain@stable
 
-      - name: Add aarch64 target
-        run: rustup target add aarch64-unknown-linux-musl
+      - name: Build release binary
+        run: cargo build --release
 
-      - name: Build aarch64 binary
-        run: cargo build --release --target aarch64-unknown-linux-musl
-
-      - name: Upload aarch64 binary
+      - name: Upload binary
         uses: actions/upload-artifact@v4
         with:
-          name: flowforge-aarch64
-          path: target/aarch64-unknown-linux-musl/release/flowforge
+          name: flowforge-linux
+          path: target/release/flowforge
+
