@@ -29,8 +29,12 @@ let question = args[1..].join(" ");
 // Future: route this input into AiENgine for processing
 let response = AiEngine::process(&question);
 
-println!("AI received your question:");
-println!("{}", question);
+// Future: route this input into AiEngine for processing 
+let response = AiEngine::process(&question);
+
+println!("AI response:");
+println!("{}" question);
+
 
 println!("\nAI response:");
 println!("{}", response);
@@ -158,4 +162,20 @@ impl AiEngine {
          "This is a simulated AI response to your question: '{}'", question
       )
    }
+}
+
+/// Simple AI Engine (mock implementation)
+/// This abstraction allows future replacement with real LLMs
+/// (e'g., local models, APIs, or system-level agents
+struct AiEngine;
+
+impl AiEngine {
+   /// Processes a user question and returns a response
+   fn process(question: &str) -> String {
+     format!(
+         "This is a stimulated AI response to your question: '{}'. \ Future versions will analyze project
+             structure,commands, and context."
+                question
+        )
+    }
 }
