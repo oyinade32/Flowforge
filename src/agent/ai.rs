@@ -27,7 +27,7 @@ pub fn handle_ai(args: Vec<String>) {
     match args[0].as_str() {
         "help" => print_help(),
 
-        "ask" => {
+        "ask" | "question" => {
             if args.len() < 2 {
                 println!("Please provide a question.");
                 return;
@@ -41,25 +41,41 @@ pub fn handle_ai(args: Vec<String>) {
             // Route input through the AI engine
             let response = engine.process(&question, &config);
 
-            println!("\nAI response:\n{}", response);
+              println!();
+              println!("┌─ Flowforge AI Response");
+              println!("│");
+                for line in response.lines() {
+                    println!("| {}", line);
+                }
+            println!("│");
+            println!("└─ End");
+
         }
 
         "explain" => explain_readme(),
 
         _ => {
-            println!("Unknown AI command.\n");
-            print_help();
-        }
+            println!("Error: Unknown AI command '{}'.", args[0]);
+            println!("Run `flowforge ai help` to see available commands.\n");
+       }
+
     }
 }
 
 /// Prints AI command help
 fn print_help() {
     println!("Flowforge AI Agent");
+    println!("------------------");
+    println!("Usage:");
+    println!("  flowforge ai <command> [arguments]");
     println!();
     println!("Commands:");
-    println!("  flowforge ai help");
-    println!("  flowforge ai ask <question>");
+    println!("  help                 Show this help message");
+    println!("  ask <question>       Ask a question about the project");
+    println!("  explain              Explain the project README");
+    println!();
+    println!("Examples:");
+    println!("  flowforge ai ask \"What does this project do?\"");
     println!("  flowforge ai explain");
 }
 

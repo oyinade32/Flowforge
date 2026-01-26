@@ -43,6 +43,7 @@ fn main() {
         }
     }
 }
+
 fn create_project(name: &str, lang: &str) {
     let project_path = Path::new(name);
 
