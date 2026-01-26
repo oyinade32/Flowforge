@@ -4,7 +4,6 @@ use std::fs;
 use std::path::Path;
 use std::process::Command;
 
-
 #[derive(Parser)]
 #[command(name = "flowforge")]
 #[command(about ="Automate developer project setup", long_about = None)]
@@ -24,11 +23,11 @@ enum Commands {
         #[arg(long, default_value = "basic")]
         lang: String,
     },
-/// Run the AI agent
-  Ai {
-   /// Ai action (e.g. help)
-   action:  Vec <String>,
-}
+    /// Run the AI agent
+    Ai {
+        /// Ai action (e.g. help)
+        action: Vec<String>,
+    },
 }
 
 fn main() {
@@ -39,12 +38,11 @@ fn main() {
             create_project(&name, &lang);
             init_git(&name);
         }
-    Commands::Ai { action } => {
-       agent::ai::handle_ai(action);
+        Commands::Ai { action } => {
+            agent::ai::handle_ai(action);
+        }
+    }
 }
-      }  
-    
-   }
 fn create_project(name: &str, lang: &str) {
     let project_path = Path::new(name);
 
@@ -53,76 +51,67 @@ fn create_project(name: &str, lang: &str) {
         return;
     }
 
-// Create directories
-fs::create_dir_all(format!("{}/src", name))
-    .expect("Failed to create project directories");
+    // Create directories
+    fs::create_dir_all(format!("{}/src", name)).expect("Failed to create project directories");
 
-// Create README
-fs::write(
-   format!("{}/README.md", name),
-   format!("# {}\n\nCreated with Flowforge", name),
+    // Create README
+    fs::write(
+        format!("{}/README.md", name),
+        format!("# {}\n\nCreated with Flowforge", name),
+    )
+    .expect("Failed to create README");
 
-)
-.expect("Failed to create README");
+    // Create .gitignore
+    fs::write(format!("{}/.gitignore", name), "target/\n.DS_Store\n")
+        .expect("Failed to create .gitignore");
 
-
-// Create .gitignore
-fs::write(
-   format!("{}/.gitignore", name),
-   "target/\n.DS_Store\n",
-)
-.expect("Failed to create .gitignore");
-
-// Create main source file
-let main_content = match lang {
-   "rust" => r#"
+    // Create main source file
+    let main_content = match lang {
+        "rust" => {
+            r#"
 
 fn main() {
   println!("Hello from your Rust project!");
 }
 
-"#,
-    _=> r#"
+"#
+        }
+        _ => {
+            r#"
 fn main() {
    println!("Hello from your project!")
 }
-"#, 
-   };
+"#
+        }
+    };
 
-  fs::write(format!("{}/src/main.rs", name), main_content)
-     .expect("Failed to create main.rs");
-  
-  println!("project '{}' created successfully!", name);
+    fs::write(format!("{}/src/main.rs", name), main_content).expect("Failed to create main.rs");
+
+    println!("project '{}' created successfully!", name);
 }
 
 fn init_git(name: &str) {
-  let path = Path::new(name);
+    let path = Path::new(name);
 
+    println!("Initalizing git repository...");
 
-println!("Initalizing git repository...");
+    Command::new("git")
+        .arg("init")
+        .current_dir(path)
+        .status()
+        .expect("Git init failed");
 
-Command::new("git")
-   .arg("init")
-   .current_dir(path)
-   .status()
-   .expect("Git init failed");
+    Command::new("git")
+        .args(["add", "."])
+        .current_dir(path)
+        .status()
+        .expect("Git add failed");
 
+    Command::new("git")
+        .args(["commit", "-m", "Initial commit"])
+        .current_dir(path)
+        .status()
+        .expect("Git commit failed");
 
-Command::new("git")
-   .args(["add", "."])
-   .current_dir(path)
-   .status()
-   .expect("Git add failed");
-
-
-Command::new("git")
-   .args(["commit", "-m", "Initial commit"])
-   .current_dir(path)
-   .status()
-   .expect("Git commit failed");
-
-
-println!("Git repository initialized");
-
+    println!("Git repository initialized");
 }
-

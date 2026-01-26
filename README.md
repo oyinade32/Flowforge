@@ -1,65 +1,87 @@
-# Flowforge 
-### A Rust Command-Line Tool for Automated Project Understanding
+# Flowforge  
+### A Rust-Based Command-Line Tool for Project Exploration and AI-Assisted Understanding
 
 ---
 
-##  Overview
+## Overview
 
-Flowforge is a Rust-based command-line tool designed to help developers and students quickly understand new or unfamiliar software projects.
+Flowforge is a Rust-based command-line interface (CLI) designed to help developers and students quickly understand new or unfamiliar software projects.
 
-When joining a new project, developers often struggle to understand:
+When joining an existing project, developers often struggle to identify:
 - Project structure
-- File responsibilities
-- Entry points
-- Configuration files
+- File and module responsibilities
+- Entry points and configuration files
+- Relationships between components
 
-Flowforge solves this problem by automating project exploration through a CLI interface and an AI-style explanation agent.
+Flowforge addresses this challenge by combining structured CLI commands with an experimental AI-style explanation engine that guides users through a project’s architecture.
 
 ---
 
-##  Problem Statement
+## Problem Statement
 
 Understanding a new codebase is time-consuming and error-prone, especially for:
-- Students learning programming
-- Developers joining new teams
+- Students learning software engineering
+- Developers onboarding into new teams
 - Open-source contributors reviewing repositories
 
-Manually reading files and folders slows productivity and creates onboarding friction.
+Manual exploration of files and folders slows productivity and creates onboarding friction.
 
 ---
 
 ## Solution
 
-Flowforge provides a command-line interface that:
-- Initializes developer projects
-- Automates project structure creation
-- Uses an AI-style agent to explain files and project layout
-- Offers simple commands for exploration and guidance
+Flowforge provides a command-line workflow that allows users to:
+
+- Initialize and scaffold projects with consistent structure
+- Explore files and directories via simple CLI commands
+- Invoke an AI-style agent to explain project layout and intent
+- Route user input through a modular reasoning pipeline
 
 The tool is written entirely in Rust, ensuring performance, safety, and cross-platform compatibility.
 
 ---
 
-##  Features
+## Features
 
--  Automated project scaffolding
--  AI-style explanation agent
--  Modular Rust architecture
--  Git repository initialization
--  Beginner-friendly CLI commands
+- Command-line driven project interaction
+- Modular Rust architecture
+- AI-style explanation and reasoning engine (mock implementation)
+- Intent detection (explain, summarize, analyze, ask)
+- Extensible design for future AI integration
+- Git-friendly development workflow
 
 ---
 
-##  Installation
+## AI Assistant (Experimental)
 
-Clone the repository and build the project:
+Flowforge includes an experimental AI-style assistant designed to simulate intelligent project understanding.
+
+The current implementation:
+- Parses user input from the CLI
+- Detects user intent (explain, summarize, analyze, ask)
+- Routes requests through a structured AI engine
+- Generates contextual responses based on detected intent
+
+Although the AI engine is currently a mock implementation, its architecture is intentionally designed to support future integration with:
+- Local language models
+- External AI APIs
+- System-aware developer tooling
+
+This ensures Flowforge remains flexible and provider-agnostic.
+
+---
+
+## Installation
+
+Clone the repository and build the project locally:
 
 ```bash
 git clone https://github.com/oyinade32/flowforge.git
 cd flowforge
 cargo build
 
+---
+
 ## License
 
-This project is developed for academic purposes as part of a university examination.
-
+This project was developed for academic purposes as part of a university examination.
