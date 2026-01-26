@@ -71,6 +71,59 @@ This ensures Flowforge remains flexible and provider-agnostic.
 
 ---
 
+## Design Intent
+
+Flowforge is intentionally designed as a lightweight, local-first CLI tool.
+
+Unlike cloud-dependent AI coding assistants, Flowforge:
+- Does not require an internet connection
+- Does not depend on a specific AI provider
+- Focuses on understanding *existing* project structure rather than generating new code
+
+The current AI engine is a mock implementation that demonstrates:
+- Intent detection
+- Command routing
+- Modular reasoning stages
+
+This architecture allows future integration with:
+- Local language models
+- Rule-based analyzers
+- External APIs (optional, not required)
+
+The goal is not to replace tools like Gemini CLI or Claude Code, but to complement them by providing structured, system-aware project understanding directly in the terminal.
+
+---
+
+# CLI Command Reference
+
+The following commands are available in Flowforge:
+
+| Command | Description |
+|--------|-------------|
+|`flowforge ai help` | Displays available AI-related commands |
+| `flowforge ai ask <question>` | Sends a question to the AI-style engine for processing |
+| `flowforge ai explain`| Reads and explains the project README file |
+| `flowforge help`| Displays general Flowforge CLI help information |
+
+These commands are designed to be simple and discoverable, allowing users to explore projects incrementally through guided CLI interactions.
+
+## Limitations & Future Work
+
+Flowforge is intentionally designed as a lightweight, local-first CLI tool.
+
+### Current Limitations
+- The AI assistant is a mock implementation and does not use a real language model
+- Explanations are based on structured intent detection rather than semantic understanding
+- Project analysis is limited to user-invoked commands (no background indexing)
+- The tool does not yet analyze source code dependencies or execution flow
+
+### Future Enhancements
+- Integration with local or API-based language models
+- Static analysis of project files and module relationships
+- Context-aware explanations based on project history and user commands
+- Expanded CLI commands for deeper project inspection
+- Optional configuration via a `flowforge.toml` file
+
 ## Installation
 
 Clone the repository and build the project locally:
@@ -79,6 +132,7 @@ Clone the repository and build the project locally:
 git clone https://github.com/oyinade32/flowforge.git
 cd flowforge
 cargo build
+
 
 ---
 

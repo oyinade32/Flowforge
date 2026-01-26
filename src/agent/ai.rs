@@ -82,8 +82,11 @@ fn explain_readme() {
         }
     }
 }
-
-/// Represents supported AI task types
+/// High-level AI task classification
+///
+/// This abstraction allows Flowforge to evolve from
+/// simple rule-based reasoning into model-driven analysis.
+/// without changing the CLI interface.
 #[derive(Debug)]
 enum AiTask {
     Explain,
@@ -125,6 +128,11 @@ impl AiEngine {
     }
 
     /// Main AI processing entry point
+    ///
+    /// NOTE:
+    /// This processing pipeline is intentionally model-agnostic.
+    /// Future versions may plug in local LLMs, external APIs,
+    /// or static analyzers without changing the CLI interface.
     pub fn process(&self, input: &str, config: &AiConfig) -> String {
         let task = self.detect_task(input);
 
