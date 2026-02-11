@@ -134,6 +134,13 @@ cd flowforge
 cargo build
 
 
+## Download Prebuilt Binary
+
+You can download the precompiled Linux binary from the latest GitHub release:
+
+https://github.com/oyinade32/Flowforge/releases/latest
+
+
 ---
 
 ## License
