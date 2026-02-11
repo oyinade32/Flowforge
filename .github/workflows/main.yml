@@ -34,3 +34,4 @@ jobs:
           name: flowforge-${{ matrix.target }}
           path: target/${{ matrix.target }}/release/flowforge
 
+
