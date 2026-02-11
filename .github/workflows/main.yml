@@ -15,8 +15,7 @@ jobs:
           - aarch64-unknown-linux-musl
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
       - name: Install Rust
         uses: dtolnay/rust-toolchain@stable
@@ -26,16 +25,12 @@ jobs:
       - name: Install musl tools
         run: sudo apt-get update && sudo apt-get install -y musl-tools
 
-      - name: Build release binary
+      - name: Build
         run: cargo build --release --target ${{ matrix.target }}
-
-      - name: Rename binary
-        run: |
-          mkdir output
-          cp target/${{ matrix.target }}/release/flowforge output/flowforge-${{ matrix.target }}
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
           name: flowforge-${{ matrix.target }}
-          path: output/flowforge-${{ matrix.target }}
+          path: target/${{ matrix.target }}/release/flowforge
+
