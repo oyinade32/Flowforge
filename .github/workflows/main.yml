@@ -3,12 +3,16 @@ name: Build Flowforge CLI
 on:
   push:
     branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
 
 jobs:
   build:
     runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        target:
+          - x86_64-unknown-linux-musl
+          - aarch64-unknown-linux-musl
 
     steps:
       - name: Checkout repository
@@ -16,13 +20,22 @@ jobs:
 
       - name: Install Rust
         uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: ${{ matrix.target }}
+
+      - name: Install musl tools
+        run: sudo apt-get update && sudo apt-get install -y musl-tools
 
       - name: Build release binary
-        run: cargo build --release
+        run: cargo build --release --target ${{ matrix.target }}
 
-      - name: Upload binary
+      - name: Rename binary
+        run: |
+          mkdir output
+          cp target/${{ matrix.target }}/release/flowforge output/flowforge-${{ matrix.target }}
+
+      - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
-          name: flowforge-linux
-          path: target/release/flowforge
-
+          name: flowforge-${{ matrix.target }}
+          path: output/flowforge-${{ matrix.target }}
